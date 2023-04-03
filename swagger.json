@@ -1,0 +1,517 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "API de Plantas e Parceiros",
+    "version": "1.0.0",
+    "description": "Uma API para gerenciar plantas e parceiros"
+  },
+  "host": "127.0.0.1:5000",
+  "basePath": "/",
+  "schemes": ["http", "https"],
+  "consumes": ["application/json"],
+  "produces": ["application/json"],
+  "paths": {
+    "/parceiros": {
+      "get": {
+        "summary": "Endpoint para retornar todos os parceiros cadastrados",
+        "description": "Retorna uma lista com todos os parceiros cadastrados no sistema",
+        "responses": {
+          "200": {
+            "description": "Sucesso.",
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "uuid": {
+                    "type": "integer",
+                    "format": "int64"
+                  },
+                  "nome": {
+                    "type": "string"
+                  },
+                  "cnpj": {
+                    "type": "string"
+                  },
+                  "email": {
+                    "type": "string"
+                  },
+                  "dataCriacao": {
+                    "type": "string"
+                  },
+                  "dataAtualizacao": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Erro interno do servidor"
+          }
+        }
+      },
+      "post": {
+        "summary": "Endpoint para cadastrar de um novo usuario parceiro",
+        "description": "Cria um novo usuario parceiro no sistema",
+        "parameters": [
+          {
+            "name": "Request body",
+            "in": "body",
+            "description": "Informacoes do usuario",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "nome": {
+                  "type": "string"
+                },
+                "cnpj": {
+                  "type": "string"
+                },
+                "email": {
+                  "type": "string",
+                  "format": "email"
+                },
+                "senha": {
+                  "type": "string"
+                }
+              },
+              "required": ["nome", "cnpj", "email", "senha"]
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Parceiro criado"
+          },
+          "400": {
+            "description": "Dados invalidos do parceiro"
+          },
+          "500": {
+            "description": "Erro interno do servidor"
+          }
+        }
+      }
+    },
+    "/ultimos-parceiros": {
+      "get": {
+        "summary": "Endpoint para retornar os ultimos 10 parceiros cadastrados",
+        "description": "Retorna uma lista com os ultimos 10 parceiros cadastrados no sistema",
+        "responses": {
+          "200": {
+            "description": "Sucesso.",
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "uuid": {
+                    "type": "integer",
+                    "format": "int64"
+                  },
+                  "nome": {
+                    "type": "string"
+                  },
+                  "cnpj": {
+                    "type": "string"
+                  },
+                  "email": {
+                    "type": "string"
+                  },
+                  "dataCriacao": {
+                    "type": "string"
+                  },
+                  "dataAtualizacao": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Erro interno do servidor"
+          }
+        }
+      }
+    },
+    "/parceiros/{uuid}": {
+      "get": {
+        "summary": "Endpoint para retornar um parceiro especifico a partir do seu identificador",
+        "description": "Retorna um parceiro especifico do sistema, com base no UUID informado",
+        "parameters": [
+          {
+            "name": "uuid",
+            "in": "path",
+            "description": "UUID do parceiro a ser recuperado",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "404": {
+            "description": "Parceiro nao encontrado"
+          },
+          "500": {
+            "description": "Erro interno do servidor"
+          }
+        }
+      }
+    },
+    "/atualizar-parceiro/{uuid}": {
+      "put": {
+        "summary": "Endpoint para atualizar informacoes de um usuario existente",
+        "description": "",
+        "parameters": [
+          {
+            "name": "uuid",
+            "in": "path",
+            "description": "ID do usuario a ser atualizado",
+            "required": true,
+            "type": "integer",
+            "format": "int64"
+          },
+          {
+            "name": "Request body",
+            "in": "body",
+            "description": "Informacoes do usuario a serem atualizadas",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "nome": {
+                  "type": "string"
+                },
+                "cnpj": {
+                  "type": "string"
+                },
+                "email": {
+                  "type": "string",
+                  "format": "email"
+                },
+                "senha": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Usuario atualizado com sucesso"
+          },
+          "400": {
+            "description": "Requisicao invalida"
+          },
+          "404": {
+            "description": "Usuario nao encontrado"
+          },
+          "500": {
+            "description": "Erro interno do servidor"
+          }
+        }
+      }
+    },
+    "/deletar-parceiro/{uuid}": {
+      "delete": {
+        "summary": "Endpoint para deletar informacoes de um usuario existente",
+        "description": "",
+        "parameters": [
+          {
+            "name": "uuid",
+            "in": "path",
+            "description": "ID do usuario a ser deletado",
+            "required": true,
+            "type": "integer",
+            "format": "int64"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Usuario deletado com sucesso"
+          },
+          "400": {
+            "description": "Requisicao invalida"
+          },
+          "404": {
+            "description": "Usuario nao encontrado"
+          },
+          "500": {
+            "description": "Erro interno do servidor"
+          }
+        }
+      }
+    },
+    "/plantas": {
+      "get": {
+        "summary": "Endpoint para retornar todas as plantas cadastradas",
+        "description": "Retorna uma lista com todas as plantas cadastradas no sistema",
+        "responses": {
+          "200": {
+            "description": "Sucesso.",
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "uuid": {
+                    "type": "integer",
+                    "format": "int64"
+                  },
+                  "nome": {
+                    "type": "string"
+                  },
+                  "cep": {
+                    "type": "string"
+                  },
+                  "latitude": {
+                    "type": "number",
+                    "format": "float"
+                  },
+                  "longitude": {
+                    "type": "number",
+                    "format": "float"
+                  },
+                  "capacidadeMaxima": {
+                    "type": "integer",
+                    "format": "int64"
+                  },
+                  "dataCriacao": {
+                    "type": "string"
+                  },
+                  "dataAtualizacao": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Erro interno do servidor"
+          }
+        }
+      },
+      "post": {
+        "summary": "Endpoint para cadastro de uma nova planta",
+        "description": "Cria uma nova planta no sistema",
+        "parameters": [
+          {
+            "name": "Request body",
+            "in": "body",
+            "description": "Informacoes do usuario",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "nome": {
+                  "type": "string"
+                },
+                "cep": {
+                  "type": "string"
+                },
+                "latitude": {
+                  "type": "number",
+                  "format": "float"
+                },
+                "longitude": {
+                  "type": "number",
+                  "format": "float"
+                },
+                "capacidadeMaxima": {
+                  "type": "integer",
+                  "format": "int64"
+                }
+              },
+              "required": [
+                "nome",
+                "cep",
+                "latitude",
+                "longitude",
+                "capacidadeMaxima"
+              ]
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Planta criado"
+          },
+          "400": {
+            "description": "Dados invalidos do planta"
+          },
+          "500": {
+            "description": "Erro interno do servidor"
+          }
+        }
+      }
+    },
+    "/plantas-maior-capacidade": {
+      "get": {
+        "summary": "Endpoint para retornar as 10 plantas com maior capacidade",
+        "description": "Retorna uma lista com as 10 plantas com maior capacidade cadastradas no sistema",
+        "responses": {
+          "200": {
+            "description": "Sucesso.",
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "uuid": {
+                    "type": "integer",
+                    "format": "int64"
+                  },
+                  "nome": {
+                    "type": "string"
+                  },
+                  "cep": {
+                    "type": "string"
+                  },
+                  "latitude": {
+                    "type": "number",
+                    "format": "float"
+                  },
+                  "longitude": {
+                    "type": "number",
+                    "format": "float"
+                  },
+                  "capacidadeMaxima": {
+                    "type": "integer",
+                    "format": "int64"
+                  },
+                  "dataCriacao": {
+                    "type": "string"
+                  },
+                  "dataAtualizacao": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Erro interno do servidor"
+          }
+        }
+      }
+    },
+    "/plantas/{uuid}": {
+      "get": {
+        "summary": "Endpoint para retornar um planta especifico a partir do seu identificador",
+        "description": "Retorna um planta especifico do sistema, com base no UUID informado",
+        "parameters": [
+          {
+            "name": "uuid",
+            "in": "path",
+            "description": "UUID do planta a ser recuperado",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "404": {
+            "description": "Planta nao encontrado"
+          },
+          "500": {
+            "description": "Erro interno do servidor"
+          }
+        }
+      }
+    },
+    "/atualizar-planta/{uuid}": {
+      "put": {
+        "summary": "Endpoint para atualizar informacoes de uma planta existente",
+        "description": "",
+        "parameters": [
+          {
+            "name": "uuid",
+            "in": "path",
+            "description": "ID da planta a ser atualizada",
+            "required": true,
+            "type": "integer",
+            "format": "int64"
+          },
+          {
+            "name": "Request body",
+            "in": "body",
+            "description": "Informacoes da planta a serem atualizadas",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "nome": {
+                  "type": "string"
+                },
+                "cep": {
+                  "type": "string"
+                },
+                "latitude": {
+                  "type": "number",
+                  "format": "float"
+                },
+                "longitude": {
+                  "type": "number",
+                  "format": "float"
+                },
+                "capacidadeMaxima": {
+                  "type": "integer",
+                  "format": "int64"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Planta atualizada com sucesso"
+          },
+          "400": {
+            "description": "Requisicao invalida"
+          },
+          "404": {
+            "description": "Planta nao encontrado"
+          },
+          "500": {
+            "description": "Erro interno do servidor"
+          }
+        }
+      }
+    },
+    "/deletar-planta/{uuid}": {
+      "delete": {
+        "summary": "Endpoint para deletar informacoes de uma planta existente",
+        "description": "",
+        "parameters": [
+          {
+            "name": "uuid",
+            "in": "path",
+            "description": "ID da planta a ser deletada",
+            "required": true,
+            "type": "integer",
+            "format": "int64"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Planta atualizado com sucesso"
+          },
+          "400": {
+            "description": "Requisicao invalida"
+          },
+          "404": {
+            "description": "Planta nao encontrado"
+          },
+          "500": {
+            "description": "Erro interno do servidor"
+          }
+        }
+      }
+    }
+  }
+}

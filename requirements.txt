@@ -1,0 +1,7 @@
+flask
+flask-restful
+flask-sqlalchemy
+requests
+pytest
+pytest-mock
+flask_swagger_ui
